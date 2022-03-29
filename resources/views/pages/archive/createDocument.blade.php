@@ -50,6 +50,17 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        @hasrole('Super Admin')
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>&nbsp;</label>
+                                                    <a href="{{ route('dashboard.category.create') }}"
+                                                        class="btn btn-primary btn-block">
+                                                        <i class="fas fa-plus"></i> Tambah Kategori
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endhasrole
                                         @hasrole('Admin')
                                             <div class="col-md-2">
                                                 <div class="form-group">
@@ -72,6 +83,17 @@
                                             </div>
                                         </div>
                                         
+                                        @hasrole('Super Admin')
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label>
+                                                <a href="{{ route('dashboard.productgroup.create') }}"
+                                                    class="btn btn-primary btn-block">
+                                                    <i class="fas fa-plus"></i> Tambah Product Group
+                                                </a>
+                                            </div>
+                                        </div>
+                                        @endhasrole
                                         @hasrole('Admin')
                                         <div class="col-md-2">
                                             <div class="form-group">

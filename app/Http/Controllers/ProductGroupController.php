@@ -33,7 +33,8 @@ class ProductGroupController extends Controller
 
     public function create()
     {
-        $category = Category::all();
+        $category = Category::with('productGroups')->get();
+        // dd($category);
         $productGroup = ProductGroup::all();
         return view('pages.productGroup.create', compact(['productGroup', 'category']));
     }

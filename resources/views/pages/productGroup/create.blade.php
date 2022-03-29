@@ -81,37 +81,40 @@
                                     data-target="#addUserModal">
                                     <i class="fas fa-plus mr-2"></i>Add Product Group
                                 </button>
-                                <table id="productListTable" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Number Code</th>
-                                            <th class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($productGroup as $eachGroup)
+                                @foreach ($category as $eachCategory)
+                                <h6>{{ $eachCategory->name }}</h6>
+                                    <table class="table table-bordered table-striped productListTables mb-5">
+                                        <thead class="bg-primary">
                                             <tr>
-                                                <td class="align-middle">{{ $eachGroup->name }}</td>
-                                                <td class="align-middle">{{ $eachGroup->numberCode }}</td>
-                                                <td class="align-middle text-center" width="20%">
-                                                    <div class="form-group">
-                                                        <button data-id="{{ $eachGroup->id }}" name="edit"
-                                                            class="btn btn-success">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                        <button data-id="{{ $eachGroup->id }}" name="delete"
-                                                            class="btn btn-danger">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
+                                                <th>Name</th>
+                                                <th>Number Code</th>
+                                                <th class="text-center">Action</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                    </tfoot>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($eachCategory->productGroups as $eachGroup)
+                                                <tr>
+                                                    <td class="salign-middle">{{ $eachGroup->name }}</td>
+                                                    <td class="align-middle">{{ $eachGroup->numbersCode }}</td>
+                                                    <td class="align-middle text-center" width="20%">
+                                                        <div class="form-group">
+                                                            <button data-id="{{ $eachGroup->id }}" name="edit"
+                                                                class="btn btn-sm btn-success">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button data-id="{{ $eachGroup->id }}" name="delete"
+                                                                class="btn btn-sm btn-danger">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -227,7 +230,7 @@
             })
 
             //delete button action
-            $(document).on("click", "table#productListTable button[name='delete']", function() {
+            $(document).on("click", "table.productListTables button[name='delete']", function() {
                 let id = $(this).attr('data-id');
                 Swal.fire({
                     title: 'Apakah kamu yakin?',
@@ -263,7 +266,7 @@
             let editUserForm = $("form#editUserForm");
 
             //edit button action
-            $(document).on("click", "table#productListTable button[name='edit']", function() {
+            $(document).on("click", "table.productListTables button[name='edit']", function() {
                 let id = $(this).attr('data-id');
 
                 $.ajax({
@@ -276,10 +279,11 @@
                     success: function(res) {
                         let data = res.data;
                         console.log(data)
-                        editUserModal.find("select[name='category_id'] option").each(function() {
-                            if ($(this).val() == data.category_id)
-                                $(this).attr("selected", "selected");
-                        });
+                        editUserModal.find("select[name='category_id'] option").each(
+                            function() {
+                                if ($(this).val() == data.category_id)
+                                    $(this).attr("selected", "selected");
+                            });
                         editUserModal.find("input[name='name']").val(data.name);
                         editUserModal.find("input[name='numberCode']").val(data.numberCode);
 
